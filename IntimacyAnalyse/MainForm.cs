@@ -48,13 +48,16 @@ namespace IntimacyAnalyse
             string normalizedFileName = fileName.Split('.')[0] + ".csv";
             foreach (DataRow row in excelTable.Rows)
             {
-                int sec = Preprocess.timeFormat((String)row[3]);
-                row[3] = sec;
+                int sec = Preprocess.timeFormat((String)row["通话时长"]);
+                row["通话时长"] = sec;
             }
             originDataGridView.DataSource = excelTable;
             dataList = ExcelHandler.convert2List(excelTable);
             CsvHandler.WriteCSV(normalizedFileName, dataList);
             MessageBox.Show("数据规范化成功\n规范化后的数据已写入文件" + normalizedFileName);
+
+            FeatureExtract fe = new FeatureExtract();
+            fe.dataStatistic(dataList);
         }
     }
 }
