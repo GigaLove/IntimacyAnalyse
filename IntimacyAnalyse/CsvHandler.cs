@@ -34,6 +34,11 @@ namespace IntimacyAnalyse
             fileWriter.Close();
         }
 
+        /// <summary>
+        /// 读CSV文件，将文件内容读取到List<String[]>中
+        /// </summary>
+        /// <param name="filePathName"></param>
+        /// <returns></returns>
         public static List<String[]> ReadCSV(string filePathName)
         {
             List<String[]> ls = new List<String[]>();

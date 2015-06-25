@@ -8,13 +8,14 @@ namespace IntimacyAnalyse
 {
     class ContactFeature
     {
+        private string localNumber;
         private string contactNumber;
         private int phoneCount;
         private int phoneDuration;
         private double phoneCountRate;
         private double phoneDurationRate;
         private int contactFrequency;
-        private int[] timeSlotPhoneCount;
+        private double[] timeSlotPhoneCount;
         private int intimacy;
         private DateTimeFormatInfo dtFormat;
 
@@ -22,16 +23,23 @@ namespace IntimacyAnalyse
         {
         }
 
-        public ContactFeature(string contactNumber)
+        public ContactFeature(string localNumber, string contactNumber)
         {
+            this.localNumber = localNumber;
             this.contactNumber = contactNumber;
             this.phoneCount = 0;
             this.phoneDuration = 0;
-            intimacy = -1;
             dtFormat = new DateTimeFormatInfo();
-            dtFormat.ShortDatePattern = "yyyy/MM/dd hh:mm";
+            //dtFormat.ShortDatePattern = "yyyy/MM/dd hh:mm";
+            timeSlotPhoneCount = new double[3];
         }
-        
+
+        public string LocalNumber
+        {
+            get { return localNumber; }
+            set { localNumber = value; }
+        }
+
         public string ContactNumber
         {
             get { return contactNumber; }
@@ -62,7 +70,7 @@ namespace IntimacyAnalyse
             set { phoneDurationRate = value; }
         }
 
-        public int[] TimeSlotPhoneCount
+        public double[] TimeSlotPhoneCount
         {
             get { return timeSlotPhoneCount; }
             set { timeSlotPhoneCount = value; }
@@ -92,21 +100,35 @@ namespace IntimacyAnalyse
 
         public void computeFrequency()
         {
-            //if (phoneCount == 1)
-            //{
-                
-            //}
-            //DateTime date1 = Convert.ToDateTime(firstRecordDate, dtFormat);
-            //DateTime date2 = Convert.ToDateTime(lastRecordDate, dtFormat);
-
-            //int daySpan = (date2 - date1).Days;
             contactFrequency = (int)Math.Ceiling((double)150 / phoneCount);
+        }
+
+        public void timeSlotStat(String time)
+        {
+            DateTime dateTime = Convert.ToDateTime(time, dtFormat);
+            int hour = dateTime.Hour;
+            if (hour >= 6 && hour < 12)
+            {
+                timeSlotPhoneCount[0]++;
+            }
+            else if (hour >= 12 && hour < 18)
+            {
+                timeSlotPhoneCount[1]++;
+            }
+            else if (hour > 18 && hour <= 24)
+            {
+                timeSlotPhoneCount[2]++;
+            }
+            else
+            {
+            }
         }
 
         public string[] convert2StrArray()
         {
-            string[] featureArray = {phoneCount.ToString(), String.Format("{0:N4}", phoneCountRate), phoneDuration.ToString(),
-                                       String.Format("{0:N4}", phoneDurationRate), contactFrequency.ToString(), intimacy.ToString()};
+            string[] featureArray = {localNumber, contactNumber, phoneCount.ToString(), String.Format("{0:N4}", phoneCountRate), 
+                                        phoneDuration.ToString(), String.Format("{0:N4}", phoneDurationRate), contactFrequency.ToString(),
+                                        timeSlotPhoneCount[0].ToString(), timeSlotPhoneCount[1].ToString(), timeSlotPhoneCount[2].ToString()};
             return featureArray;
         }
     }

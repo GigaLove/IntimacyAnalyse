@@ -15,6 +15,10 @@ namespace IntimacyAnalyse
             contactFeatureTable = new Hashtable();
         }
 
+        /// <summary>
+        /// 数据特征提取
+        /// </summary>
+        /// <param name="dataList"></param>
         public void dataStatistic(List<string[]> dataList)
         {
             if (dataList == null || dataList.Count < 1)
@@ -22,7 +26,6 @@ namespace IntimacyAnalyse
                 return;
             }
 
-            List<string[]> featureList = new List<string[]>();
             UserFeature uf = null;
             ContactFeature cf = null;
             Hashtable singleFeatureTable = null;
@@ -32,6 +35,7 @@ namespace IntimacyAnalyse
                 string localNumber = dataRow[0];
                 string contactNumber = dataRow[1];
                 int duration = Convert.ToInt32(dataRow[2]);
+                string time = dataRow[4];
 
                 if (!contactFeatureTable.Contains(localNumber))
                 {
@@ -44,17 +48,29 @@ namespace IntimacyAnalyse
 
                 if (!singleFeatureTable.Contains(dataRow[1]))
                 {
-                    cf = new ContactFeature(contactNumber);
+                    cf = new ContactFeature(localNumber, contactNumber);
                     singleFeatureTable.Add(contactNumber, cf);
-                    cf.Intimacy = Convert.ToInt32(dataRow[5]);
                 }
 
                 cf = singleFeatureTable[contactNumber] as ContactFeature;
                 cf.countRise();
                 cf.durationRise(duration);
+                cf.timeSlotStat(time);
                 uf.totalCountRise();
                 uf.totalDurationRise(duration);
             }
+
+            writeFeature2File();
+        }
+
+        /// <summary>
+        /// 将数据特征写入到csv文件中
+        /// </summary>
+        public void writeFeature2File()
+        {
+            UserFeature uf = null;
+            ContactFeature cf = null;
+            List<string[]> featureList = new List<string[]>();
 
             foreach (DictionaryEntry de in contactFeatureTable)
             {
@@ -65,11 +81,14 @@ namespace IntimacyAnalyse
                     cf.PhoneCountRate = (double)cf.PhoneCount / uf.TotalCount;
                     cf.PhoneDurationRate = (double)cf.PhoneDuration / uf.TotalDuration;
                     cf.computeFrequency();
+                    cf.TimeSlotPhoneCount[0] = cf.TimeSlotPhoneCount[0] / cf.PhoneCount;
+                    cf.TimeSlotPhoneCount[1] = cf.TimeSlotPhoneCount[1] / cf.PhoneCount;
+                    cf.TimeSlotPhoneCount[2] = cf.TimeSlotPhoneCount[2] / cf.PhoneCount;
                     featureList.Add(cf.convert2StrArray());
                 }
             }
 
-            CsvHandler.WriteCSV("data_feature.csv", featureList);
+            CsvHandler.WriteCSV("data_feature.csv", true, featureList);
         }
 
     }
