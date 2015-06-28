@@ -32,6 +32,8 @@
             this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readOriginDataExcelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.读取特征数据ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.readContactExcelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.数据预处理文件操作ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.数据预处理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.normalizeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.数据特征提取ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,37 +69,36 @@
             this.clusterDataGridView = new System.Windows.Forms.DataGridView();
             this.clusterResGroupBox = new System.Windows.Forms.GroupBox();
             this.clusterResDataGridView = new System.Windows.Forms.DataGridView();
-            this.clusterLocalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clusterContactNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.intiRes = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.intiRichTextBox = new System.Windows.Forms.RichTextBox();
             this.nIntiRichTextBox = new System.Windows.Forms.RichTextBox();
             this.clusterValidateTabPage = new System.Windows.Forms.TabPage();
-            this.markDataGridView = new System.Windows.Forms.DataGridView();
-            this.markDataGroupBox = new System.Windows.Forms.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.iRichTextBox = new System.Windows.Forms.RichTextBox();
-            this.nRichTextBox = new System.Windows.Forms.RichTextBox();
-            this.clusterCenterGroupBox = new System.Windows.Forms.GroupBox();
-            this.readMarkDataButton = new System.Windows.Forms.Button();
-            this.clusterValidateButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.correctRatioTextBox = new System.Windows.Forms.TextBox();
             this.validateResDataGridView = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label5 = new System.Windows.Forms.Label();
-            this.correctRatioTextBox = new System.Windows.Forms.TextBox();
-            this.readContactExcelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clusterValidateButton = new System.Windows.Forms.Button();
+            this.markDataGridView = new System.Windows.Forms.DataGridView();
+            this.markDataGroupBox = new System.Windows.Forms.GroupBox();
+            this.readMarkDataButton = new System.Windows.Forms.Button();
+            this.clusterCenterGroupBox = new System.Windows.Forms.GroupBox();
+            this.nRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.iRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.resShowTabPage = new System.Windows.Forms.TabPage();
-            this.contacterDataGridView = new System.Windows.Forms.DataGridView();
+            this.resShowGroupBox = new System.Windows.Forms.GroupBox();
             this.contacterGroupBox = new System.Windows.Forms.GroupBox();
             this.readContacterButton = new System.Windows.Forms.Button();
-            this.resShowGroupBox = new System.Windows.Forms.GroupBox();
-            this.数据预处理文件操作ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contacterDataGridView = new System.Windows.Forms.DataGridView();
+            this.clusterLocalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clusterContactNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.intiRes = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.intiResPictureBox = new System.Windows.Forms.PictureBox();
             this.mainMenu.SuspendLayout();
             this.mainTabControl.SuspendLayout();
             this.preprocessTabPage.SuspendLayout();
@@ -115,14 +116,16 @@
             this.clusterResGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clusterResDataGridView)).BeginInit();
             this.clusterValidateTabPage.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.validateResDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.markDataGridView)).BeginInit();
             this.markDataGroupBox.SuspendLayout();
             this.clusterCenterGroupBox.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.validateResDataGridView)).BeginInit();
             this.resShowTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.contacterDataGridView)).BeginInit();
+            this.resShowGroupBox.SuspendLayout();
             this.contacterGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.contacterDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.intiResPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -153,13 +156,24 @@
             this.readOriginDataExcelMenuItem.Name = "readOriginDataExcelMenuItem";
             this.readOriginDataExcelMenuItem.Size = new System.Drawing.Size(182, 22);
             this.readOriginDataExcelMenuItem.Text = "读取源数据";
-            this.readOriginDataExcelMenuItem.Click += new System.EventHandler(this.readExcelMenuItem_Click);
             // 
             // 读取特征数据ToolStripMenuItem
             // 
             this.读取特征数据ToolStripMenuItem.Name = "读取特征数据ToolStripMenuItem";
-            this.读取特征数据ToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.读取特征数据ToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.读取特征数据ToolStripMenuItem.Text = "读取特征数据";
+            // 
+            // readContactExcelMenuItem
+            // 
+            this.readContactExcelMenuItem.Name = "readContactExcelMenuItem";
+            this.readContactExcelMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.readContactExcelMenuItem.Text = "读取联系方式excel";
+            // 
+            // 数据预处理文件操作ToolStripMenuItem
+            // 
+            this.数据预处理文件操作ToolStripMenuItem.Name = "数据预处理文件操作ToolStripMenuItem";
+            this.数据预处理文件操作ToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.数据预处理文件操作ToolStripMenuItem.Text = "数据预处理文件操作";
             // 
             // 数据预处理ToolStripMenuItem
             // 
@@ -172,7 +186,7 @@
             // normalizeMenuItem
             // 
             this.normalizeMenuItem.Name = "normalizeMenuItem";
-            this.normalizeMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.normalizeMenuItem.Size = new System.Drawing.Size(134, 22);
             this.normalizeMenuItem.Text = "数据规范化";
             this.normalizeMenuItem.Click += new System.EventHandler(this.normalizeMenuItem_Click);
             // 
@@ -503,24 +517,6 @@
             this.clusterResDataGridView.Size = new System.Drawing.Size(233, 166);
             this.clusterResDataGridView.TabIndex = 8;
             // 
-            // clusterLocalNum
-            // 
-            this.clusterLocalNum.HeaderText = "本机号码";
-            this.clusterLocalNum.Name = "clusterLocalNum";
-            this.clusterLocalNum.Width = 80;
-            // 
-            // clusterContactNum
-            // 
-            this.clusterContactNum.HeaderText = "对方号码";
-            this.clusterContactNum.Name = "clusterContactNum";
-            this.clusterContactNum.Width = 80;
-            // 
-            // intiRes
-            // 
-            this.intiRes.HeaderText = "亲密度";
-            this.intiRes.Name = "intiRes";
-            this.intiRes.Width = 80;
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -572,94 +568,6 @@
             this.clusterValidateTabPage.Text = "聚类结果评估";
             this.clusterValidateTabPage.UseVisualStyleBackColor = true;
             // 
-            // markDataGridView
-            // 
-            this.markDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.markDataGridView.Location = new System.Drawing.Point(32, 96);
-            this.markDataGridView.Name = "markDataGridView";
-            this.markDataGridView.RowTemplate.Height = 23;
-            this.markDataGridView.Size = new System.Drawing.Size(413, 282);
-            this.markDataGridView.TabIndex = 0;
-            // 
-            // markDataGroupBox
-            // 
-            this.markDataGroupBox.Controls.Add(this.readMarkDataButton);
-            this.markDataGroupBox.Location = new System.Drawing.Point(16, 76);
-            this.markDataGroupBox.Name = "markDataGroupBox";
-            this.markDataGroupBox.Size = new System.Drawing.Size(453, 339);
-            this.markDataGroupBox.TabIndex = 1;
-            this.markDataGroupBox.TabStop = false;
-            this.markDataGroupBox.Text = "标号数据集";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(434, 17);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(101, 12);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "不亲密聚类中心：";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(14, 17);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(89, 12);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "亲密聚类中心：";
-            // 
-            // iRichTextBox
-            // 
-            this.iRichTextBox.Location = new System.Drawing.Point(109, 11);
-            this.iRichTextBox.Name = "iRichTextBox";
-            this.iRichTextBox.Size = new System.Drawing.Size(228, 24);
-            this.iRichTextBox.TabIndex = 6;
-            this.iRichTextBox.Text = "";
-            // 
-            // nRichTextBox
-            // 
-            this.nRichTextBox.Location = new System.Drawing.Point(541, 11);
-            this.nRichTextBox.Name = "nRichTextBox";
-            this.nRichTextBox.Size = new System.Drawing.Size(228, 24);
-            this.nRichTextBox.TabIndex = 7;
-            this.nRichTextBox.Text = "";
-            // 
-            // clusterCenterGroupBox
-            // 
-            this.clusterCenterGroupBox.Controls.Add(this.nRichTextBox);
-            this.clusterCenterGroupBox.Controls.Add(this.label3);
-            this.clusterCenterGroupBox.Controls.Add(this.iRichTextBox);
-            this.clusterCenterGroupBox.Controls.Add(this.label4);
-            this.clusterCenterGroupBox.Location = new System.Drawing.Point(16, 14);
-            this.clusterCenterGroupBox.Name = "clusterCenterGroupBox";
-            this.clusterCenterGroupBox.Size = new System.Drawing.Size(856, 43);
-            this.clusterCenterGroupBox.TabIndex = 10;
-            this.clusterCenterGroupBox.TabStop = false;
-            this.clusterCenterGroupBox.Text = "聚类中心";
-            // 
-            // readMarkDataButton
-            // 
-            this.readMarkDataButton.Location = new System.Drawing.Point(162, 308);
-            this.readMarkDataButton.Name = "readMarkDataButton";
-            this.readMarkDataButton.Size = new System.Drawing.Size(107, 23);
-            this.readMarkDataButton.TabIndex = 0;
-            this.readMarkDataButton.Text = "读取标号数据集";
-            this.readMarkDataButton.UseVisualStyleBackColor = true;
-            this.readMarkDataButton.Click += new System.EventHandler(this.readMarkDataButton_Click);
-            // 
-            // clusterValidateButton
-            // 
-            this.clusterValidateButton.Location = new System.Drawing.Point(476, 229);
-            this.clusterValidateButton.Name = "clusterValidateButton";
-            this.clusterValidateButton.Size = new System.Drawing.Size(75, 23);
-            this.clusterValidateButton.TabIndex = 11;
-            this.clusterValidateButton.Text = "聚类分析";
-            this.clusterValidateButton.UseVisualStyleBackColor = true;
-            this.clusterValidateButton.Click += new System.EventHandler(this.clusterValidateButton_Click);
-            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.correctRatioTextBox);
@@ -671,6 +579,13 @@
             this.groupBox2.TabIndex = 12;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "聚类结果";
+            // 
+            // correctRatioTextBox
+            // 
+            this.correctRatioTextBox.Location = new System.Drawing.Point(16, 296);
+            this.correctRatioTextBox.Name = "correctRatioTextBox";
+            this.correctRatioTextBox.Size = new System.Drawing.Size(284, 21);
+            this.correctRatioTextBox.TabIndex = 9;
             // 
             // validateResDataGridView
             // 
@@ -713,19 +628,93 @@
             this.label5.TabIndex = 5;
             this.label5.Text = "准确率：";
             // 
-            // correctRatioTextBox
+            // clusterValidateButton
             // 
-            this.correctRatioTextBox.Location = new System.Drawing.Point(16, 296);
-            this.correctRatioTextBox.Name = "correctRatioTextBox";
-            this.correctRatioTextBox.Size = new System.Drawing.Size(284, 21);
-            this.correctRatioTextBox.TabIndex = 9;
+            this.clusterValidateButton.Location = new System.Drawing.Point(476, 229);
+            this.clusterValidateButton.Name = "clusterValidateButton";
+            this.clusterValidateButton.Size = new System.Drawing.Size(75, 23);
+            this.clusterValidateButton.TabIndex = 11;
+            this.clusterValidateButton.Text = "聚类分析";
+            this.clusterValidateButton.UseVisualStyleBackColor = true;
+            this.clusterValidateButton.Click += new System.EventHandler(this.clusterValidateButton_Click);
             // 
-            // readContactExcelMenuItem
+            // markDataGridView
             // 
-            this.readContactExcelMenuItem.Name = "readContactExcelMenuItem";
-            this.readContactExcelMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.readContactExcelMenuItem.Text = "读取联系方式excel";
-            this.readContactExcelMenuItem.Click += new System.EventHandler(this.readContactExcelMenuItem_Click);
+            this.markDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.markDataGridView.Location = new System.Drawing.Point(32, 96);
+            this.markDataGridView.Name = "markDataGridView";
+            this.markDataGridView.RowTemplate.Height = 23;
+            this.markDataGridView.Size = new System.Drawing.Size(413, 282);
+            this.markDataGridView.TabIndex = 0;
+            // 
+            // markDataGroupBox
+            // 
+            this.markDataGroupBox.Controls.Add(this.readMarkDataButton);
+            this.markDataGroupBox.Location = new System.Drawing.Point(16, 76);
+            this.markDataGroupBox.Name = "markDataGroupBox";
+            this.markDataGroupBox.Size = new System.Drawing.Size(453, 339);
+            this.markDataGroupBox.TabIndex = 1;
+            this.markDataGroupBox.TabStop = false;
+            this.markDataGroupBox.Text = "标号数据集";
+            // 
+            // readMarkDataButton
+            // 
+            this.readMarkDataButton.Location = new System.Drawing.Point(162, 308);
+            this.readMarkDataButton.Name = "readMarkDataButton";
+            this.readMarkDataButton.Size = new System.Drawing.Size(107, 23);
+            this.readMarkDataButton.TabIndex = 0;
+            this.readMarkDataButton.Text = "读取标号数据集";
+            this.readMarkDataButton.UseVisualStyleBackColor = true;
+            this.readMarkDataButton.Click += new System.EventHandler(this.readMarkDataButton_Click);
+            // 
+            // clusterCenterGroupBox
+            // 
+            this.clusterCenterGroupBox.Controls.Add(this.nRichTextBox);
+            this.clusterCenterGroupBox.Controls.Add(this.label3);
+            this.clusterCenterGroupBox.Controls.Add(this.iRichTextBox);
+            this.clusterCenterGroupBox.Controls.Add(this.label4);
+            this.clusterCenterGroupBox.Location = new System.Drawing.Point(16, 14);
+            this.clusterCenterGroupBox.Name = "clusterCenterGroupBox";
+            this.clusterCenterGroupBox.Size = new System.Drawing.Size(856, 43);
+            this.clusterCenterGroupBox.TabIndex = 10;
+            this.clusterCenterGroupBox.TabStop = false;
+            this.clusterCenterGroupBox.Text = "聚类中心";
+            // 
+            // nRichTextBox
+            // 
+            this.nRichTextBox.Location = new System.Drawing.Point(541, 11);
+            this.nRichTextBox.Name = "nRichTextBox";
+            this.nRichTextBox.Size = new System.Drawing.Size(228, 24);
+            this.nRichTextBox.TabIndex = 7;
+            this.nRichTextBox.Text = "";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.Location = new System.Drawing.Point(434, 17);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(101, 12);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "不亲密聚类中心：";
+            // 
+            // iRichTextBox
+            // 
+            this.iRichTextBox.Location = new System.Drawing.Point(109, 11);
+            this.iRichTextBox.Name = "iRichTextBox";
+            this.iRichTextBox.Size = new System.Drawing.Size(228, 24);
+            this.iRichTextBox.TabIndex = 6;
+            this.iRichTextBox.Text = "";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label4.Location = new System.Drawing.Point(14, 17);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(89, 12);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "亲密聚类中心：";
             // 
             // resShowTabPage
             // 
@@ -739,14 +728,15 @@
             this.resShowTabPage.Text = "可视化展现";
             this.resShowTabPage.UseVisualStyleBackColor = true;
             // 
-            // contacterDataGridView
+            // resShowGroupBox
             // 
-            this.contacterDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.contacterDataGridView.Location = new System.Drawing.Point(16, 20);
-            this.contacterDataGridView.Name = "contacterDataGridView";
-            this.contacterDataGridView.RowTemplate.Height = 23;
-            this.contacterDataGridView.Size = new System.Drawing.Size(248, 325);
-            this.contacterDataGridView.TabIndex = 0;
+            this.resShowGroupBox.Controls.Add(this.intiResPictureBox);
+            this.resShowGroupBox.Location = new System.Drawing.Point(367, 31);
+            this.resShowGroupBox.Name = "resShowGroupBox";
+            this.resShowGroupBox.Size = new System.Drawing.Size(504, 374);
+            this.resShowGroupBox.TabIndex = 2;
+            this.resShowGroupBox.TabStop = false;
+            this.resShowGroupBox.Text = "可视化展现";
             // 
             // contacterGroupBox
             // 
@@ -769,20 +759,42 @@
             this.readContacterButton.UseVisualStyleBackColor = true;
             this.readContacterButton.Click += new System.EventHandler(this.readContacterButton_Click);
             // 
-            // resShowGroupBox
+            // contacterDataGridView
             // 
-            this.resShowGroupBox.Location = new System.Drawing.Point(367, 31);
-            this.resShowGroupBox.Name = "resShowGroupBox";
-            this.resShowGroupBox.Size = new System.Drawing.Size(504, 374);
-            this.resShowGroupBox.TabIndex = 2;
-            this.resShowGroupBox.TabStop = false;
-            this.resShowGroupBox.Text = "可视化展现";
+            this.contacterDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.contacterDataGridView.Location = new System.Drawing.Point(16, 20);
+            this.contacterDataGridView.Name = "contacterDataGridView";
+            this.contacterDataGridView.ReadOnly = true;
+            this.contacterDataGridView.RowTemplate.Height = 23;
+            this.contacterDataGridView.Size = new System.Drawing.Size(248, 325);
+            this.contacterDataGridView.TabIndex = 0;
+            this.contacterDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.contacterDataGridView_CellClick);
             // 
-            // 数据预处理文件操作ToolStripMenuItem
+            // clusterLocalNum
             // 
-            this.数据预处理文件操作ToolStripMenuItem.Name = "数据预处理文件操作ToolStripMenuItem";
-            this.数据预处理文件操作ToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
-            this.数据预处理文件操作ToolStripMenuItem.Text = "数据预处理文件操作";
+            this.clusterLocalNum.HeaderText = "本机号码";
+            this.clusterLocalNum.Name = "clusterLocalNum";
+            this.clusterLocalNum.Width = 80;
+            // 
+            // clusterContactNum
+            // 
+            this.clusterContactNum.HeaderText = "对方号码";
+            this.clusterContactNum.Name = "clusterContactNum";
+            this.clusterContactNum.Width = 80;
+            // 
+            // intiRes
+            // 
+            this.intiRes.HeaderText = "类别";
+            this.intiRes.Name = "intiRes";
+            this.intiRes.Width = 80;
+            // 
+            // intiResPictureBox
+            // 
+            this.intiResPictureBox.Location = new System.Drawing.Point(18, 20);
+            this.intiResPictureBox.Name = "intiResPictureBox";
+            this.intiResPictureBox.Size = new System.Drawing.Size(470, 340);
+            this.intiResPictureBox.TabIndex = 0;
+            this.intiResPictureBox.TabStop = false;
             // 
             // MainForm
             // 
@@ -815,16 +827,18 @@
             this.clusterResGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clusterResDataGridView)).EndInit();
             this.clusterValidateTabPage.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.validateResDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.markDataGridView)).EndInit();
             this.markDataGroupBox.ResumeLayout(false);
             this.clusterCenterGroupBox.ResumeLayout(false);
             this.clusterCenterGroupBox.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.validateResDataGridView)).EndInit();
             this.resShowTabPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.contacterDataGridView)).EndInit();
+            this.resShowGroupBox.ResumeLayout(false);
             this.contacterGroupBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.contacterDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.intiResPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -875,9 +889,6 @@
         private System.Windows.Forms.Button clusterAnalyseButton;
         private System.Windows.Forms.Button readFDataButton;
         private System.Windows.Forms.DataGridView clusterResDataGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clusterLocalNum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clusterContactNum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn intiRes;
         private System.Windows.Forms.TabPage clusterValidateTabPage;
         private System.Windows.Forms.DataGridView markDataGridView;
         private System.Windows.Forms.GroupBox markDataGroupBox;
@@ -902,6 +913,10 @@
         private System.Windows.Forms.Button readContacterButton;
         private System.Windows.Forms.GroupBox resShowGroupBox;
         private System.Windows.Forms.ToolStripMenuItem 数据预处理文件操作ToolStripMenuItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clusterLocalNum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clusterContactNum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn intiRes;
+        private System.Windows.Forms.PictureBox intiResPictureBox;
     }
 }
 

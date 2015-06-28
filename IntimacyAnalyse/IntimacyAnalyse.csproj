@@ -74,6 +74,7 @@
     <Compile Include="ContactFeature.cs" />
     <Compile Include="ExcelHandler.cs" />
     <Compile Include="FeatureExtract.cs" />
+    <Compile Include="IntiRes.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

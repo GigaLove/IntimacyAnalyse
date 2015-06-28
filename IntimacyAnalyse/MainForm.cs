@@ -28,12 +28,18 @@ namespace IntimacyAnalyse
         private double[] intiMeans;
         private double[] nIntiMeans;
         private Hashtable contactPerson;
+        private Hashtable intiResTable;
+        private int intiClass;
+        private Point[] points = { new Point(215, 31), new Point(270,38), new Point(318,60), new Point(360,95), new Point(390,138), 
+            new Point(403,186), new Point(404,240), new Point(390,290), new Point(363,335), new Point(323, 371), 
+            new Point(275,394), new Point(223,403), new Point(170,396), new Point(122,375), new Point(80,342), 
+            new Point(52,298), new Point(36,246), new Point(35,194), new Point(48,142), new Point(76,98), 
+            new Point(116,62), new Point(163,39)};//初始化展示的22个人的坐标
 
         public MainForm()
         {
             InitializeComponent();
             openFileDialog = new OpenFileDialog();
-            
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -304,33 +310,70 @@ namespace IntimacyAnalyse
             double[][] featureDoubleArray = FeatureExtract.featureStr2Double(clusterFeatureList);
             int[] clustering = KMeans.Cluster(featureDoubleArray, 2);
             means = KMeans.getMeans(featureDoubleArray, clustering, 2);
+            intiClass = judgeIntiClass(clustering);
 
             for (int i = 0; i < clusterFeatureList.Count; i++)
             {
-                string[] temp = { clusterFeatureList[i][0], clusterFeatureList[i][1], clustering[i].ToString() };
+                int inti = clustering[i];
+                if (inti == intiClass)
+                    inti = 1;
+                else
+                    inti = -1;
+                string[] temp = { clusterFeatureList[i][0], clusterFeatureList[i][1], inti.ToString() };
                 DataGridViewRow dr = new DataGridViewRow();
                 dr.CreateCells(clusterResDataGridView, temp);
                 clusterResDataGridView.Rows.Add(dr);
             }
 
-            if (means[0][0] > means[1][0])
+            intiRichTextBox.Text = String.Join("\n", means[intiClass]);
+            nIntiRichTextBox.Text = String.Join("\n", means[1 - intiClass]);
+            iRichTextBox.Text = String.Join("\n", means[intiClass]);
+            nRichTextBox.Text = String.Join("\n", means[1 - intiClass]);
+            intiMeans = means[intiClass];
+            nIntiMeans = means[1 - intiClass];
+
+            intiResTable = new Hashtable();
+            IntiRes intiRes = null;
+
+            for (int i = 0; i < clusterFeatureList.Count; i++)
             {
-                intiRichTextBox.Text = String.Join("\n", means[1]);
-                nIntiRichTextBox.Text = String.Join("\n", means[0]);
-                iRichTextBox.Text = String.Join("\n", means[1]);
-                nRichTextBox.Text = String.Join("\n", means[0]);
-                intiMeans = means[1];
-                nIntiMeans = means[0];
+                string localNum = clusterFeatureList[i][0];
+                if (!intiResTable.Contains(localNum))
+                {
+                    intiRes = new IntiRes(localNum);
+                    if (contactPerson.Contains(localNum))
+                    {
+                        intiRes.Name = contactPerson[localNum] as string;
+                    }
+                    intiResTable.Add(localNum, intiRes);
+                }
+                intiRes = intiResTable[localNum] as IntiRes;
+
+                if (clustering[i] == intiClass)
+                {
+                    intiRes.IntiList.Add(clusterFeatureList[i][1]);
+                }
+                else
+                {
+                    intiRes.NIntiList.Add(clusterFeatureList[i][1]);
+                }
             }
-            else
+            MessageBox.Show("xx");
+        }
+
+        private int judgeIntiClass(int[] clustering)
+        {
+            int count = 0;
+            for (int i = 0; i < clustering.Length; i++)
             {
-                intiRichTextBox.Text = String.Join("\n", means[0]);
-                nIntiRichTextBox.Text = String.Join("\n", means[1]);
-                iRichTextBox.Text = String.Join("\n", means[0]);
-                nRichTextBox.Text = String.Join("\n", means[1]);
-                intiMeans = means[0];
-                nIntiMeans = means[1];
+                if (clustering[i] == 0)
+                    count++;
             }
+            if (count > clustering.Length - count)
+            {
+                return 1;
+            }
+            return 0;
         }
 
         /// <summary>
@@ -416,7 +459,7 @@ namespace IntimacyAnalyse
                 nIntiDistance += (data[i] - nIntiMeans[i]) * (data[i] - nIntiMeans[i]);
             }
 
-            if (intiDistance > nIntiDistance)
+            if (intiDistance < nIntiDistance)
             {
                 return 1;
             }
@@ -424,17 +467,9 @@ namespace IntimacyAnalyse
             return -1;
         }
 
-        private void readContactExcelMenuItem_Click(object sender, EventArgs e)
-        {
-            readExcelData(contacterDataGridView);
-            contactPerson = new Hashtable();
-            foreach (DataRow row in excelTable.Rows)
-            {
-                contactPerson.Add(row["姓名"], row["手机号"]);
-            }
-            MessageBox.Show("联系方式读取成功，共计" + contactPerson.Count + "个联系人信息");
-        }
-
+        /// <summary>
+        /// 读用户联系方式事件处理函数
+        /// </summary>
         private void readContacterButton_Click(object sender, EventArgs e)
         {
             readExcelData(contacterDataGridView);
@@ -444,6 +479,29 @@ namespace IntimacyAnalyse
                 contactPerson.Add(row["姓名"], row["手机号"]);
             }
             MessageBox.Show("联系方式读取成功，共计" + contactPerson.Count + "个联系人信息");
+
+            drawIntiNet();            
+        }
+
+        private void drawIntiNet()
+        {
+            Graphics g = intiResPictureBox.CreateGraphics();
+
+            Pen bluePen = new Pen(Color.DarkGray, 0.01f);
+
+            Font myFont = new Font("Itatic", 10, FontStyle.Bold);
+            Point centerPoint = new Point(intiResPictureBox.Width / 2, intiResPictureBox.Height / 2);
+
+            Brush bush = new SolidBrush(Color.Red);//填充的颜色
+           
+        }
+
+        private void contacterDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int rowindex = e.RowIndex;
+            string localNum = contacterDataGridView.Rows[rowindex].Cells[1].Value.ToString();
+
+            
         }
     }
 }
