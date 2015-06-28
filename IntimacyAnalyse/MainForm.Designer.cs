@@ -69,6 +69,9 @@
             this.clusterDataGridView = new System.Windows.Forms.DataGridView();
             this.clusterResGroupBox = new System.Windows.Forms.GroupBox();
             this.clusterResDataGridView = new System.Windows.Forms.DataGridView();
+            this.clusterLocalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clusterContactNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.intiRes = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.intiRichTextBox = new System.Windows.Forms.RichTextBox();
@@ -92,13 +95,19 @@
             this.label4 = new System.Windows.Forms.Label();
             this.resShowTabPage = new System.Windows.Forms.TabPage();
             this.resShowGroupBox = new System.Windows.Forms.GroupBox();
+            this.graphShowButton = new System.Windows.Forms.Button();
+            this.nIntiDataGridView = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.intiDataGridView = new System.Windows.Forms.DataGridView();
+            this.intiContactNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.intiName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.打分 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contacterGroupBox = new System.Windows.Forms.GroupBox();
-            this.readContacterButton = new System.Windows.Forms.Button();
             this.contacterDataGridView = new System.Windows.Forms.DataGridView();
-            this.clusterLocalNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clusterContactNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.intiRes = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.intiResPictureBox = new System.Windows.Forms.PictureBox();
             this.mainMenu.SuspendLayout();
             this.mainTabControl.SuspendLayout();
             this.preprocessTabPage.SuspendLayout();
@@ -123,9 +132,10 @@
             this.clusterCenterGroupBox.SuspendLayout();
             this.resShowTabPage.SuspendLayout();
             this.resShowGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nIntiDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.intiDataGridView)).BeginInit();
             this.contacterGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.contacterDataGridView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.intiResPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -517,6 +527,24 @@
             this.clusterResDataGridView.Size = new System.Drawing.Size(233, 166);
             this.clusterResDataGridView.TabIndex = 8;
             // 
+            // clusterLocalNum
+            // 
+            this.clusterLocalNum.HeaderText = "本机号码";
+            this.clusterLocalNum.Name = "clusterLocalNum";
+            this.clusterLocalNum.Width = 80;
+            // 
+            // clusterContactNum
+            // 
+            this.clusterContactNum.HeaderText = "对方号码";
+            this.clusterContactNum.Name = "clusterContactNum";
+            this.clusterContactNum.Width = 80;
+            // 
+            // intiRes
+            // 
+            this.intiRes.HeaderText = "类别";
+            this.intiRes.Name = "intiRes";
+            this.intiRes.Width = 80;
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -730,17 +758,118 @@
             // 
             // resShowGroupBox
             // 
-            this.resShowGroupBox.Controls.Add(this.intiResPictureBox);
+            this.resShowGroupBox.Controls.Add(this.graphShowButton);
+            this.resShowGroupBox.Controls.Add(this.nIntiDataGridView);
+            this.resShowGroupBox.Controls.Add(this.label7);
+            this.resShowGroupBox.Controls.Add(this.label6);
+            this.resShowGroupBox.Controls.Add(this.intiDataGridView);
             this.resShowGroupBox.Location = new System.Drawing.Point(367, 31);
             this.resShowGroupBox.Name = "resShowGroupBox";
             this.resShowGroupBox.Size = new System.Drawing.Size(504, 374);
             this.resShowGroupBox.TabIndex = 2;
             this.resShowGroupBox.TabStop = false;
-            this.resShowGroupBox.Text = "可视化展现";
+            this.resShowGroupBox.Text = "亲密度分析结果";
+            // 
+            // graphShowButton
+            // 
+            this.graphShowButton.Location = new System.Drawing.Point(210, 345);
+            this.graphShowButton.Name = "graphShowButton";
+            this.graphShowButton.Size = new System.Drawing.Size(75, 23);
+            this.graphShowButton.TabIndex = 6;
+            this.graphShowButton.Text = "图形化展示";
+            this.graphShowButton.UseVisualStyleBackColor = true;
+            this.graphShowButton.Click += new System.EventHandler(this.graphShowButton_Click);
+            // 
+            // nIntiDataGridView
+            // 
+            this.nIntiDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.nIntiDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn4,
+            this.dataGridViewTextBoxColumn5,
+            this.dataGridViewTextBoxColumn6});
+            this.nIntiDataGridView.Location = new System.Drawing.Point(23, 188);
+            this.nIntiDataGridView.Name = "nIntiDataGridView";
+            this.nIntiDataGridView.ReadOnly = true;
+            this.nIntiDataGridView.RowTemplate.Height = 23;
+            this.nIntiDataGridView.Size = new System.Drawing.Size(457, 151);
+            this.nIntiDataGridView.TabIndex = 5;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.HeaderText = "对方号码";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.ReadOnly = true;
+            this.dataGridViewTextBoxColumn4.Width = 140;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.HeaderText = "对方姓名";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.ReadOnly = true;
+            this.dataGridViewTextBoxColumn5.Width = 140;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.HeaderText = "score";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.ReadOnly = true;
+            this.dataGridViewTextBoxColumn6.Width = 140;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(22, 173);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(89, 12);
+            this.label7.TabIndex = 4;
+            this.label7.Text = "非亲密联系人：";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(22, 20);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(77, 12);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "亲密联系人：";
+            // 
+            // intiDataGridView
+            // 
+            this.intiDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.intiDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.intiContactNum,
+            this.intiName,
+            this.打分});
+            this.intiDataGridView.Location = new System.Drawing.Point(23, 35);
+            this.intiDataGridView.Name = "intiDataGridView";
+            this.intiDataGridView.ReadOnly = true;
+            this.intiDataGridView.RowTemplate.Height = 23;
+            this.intiDataGridView.Size = new System.Drawing.Size(457, 130);
+            this.intiDataGridView.TabIndex = 1;
+            // 
+            // intiContactNum
+            // 
+            this.intiContactNum.HeaderText = "对方号码";
+            this.intiContactNum.Name = "intiContactNum";
+            this.intiContactNum.ReadOnly = true;
+            this.intiContactNum.Width = 140;
+            // 
+            // intiName
+            // 
+            this.intiName.HeaderText = "对方姓名";
+            this.intiName.Name = "intiName";
+            this.intiName.ReadOnly = true;
+            this.intiName.Width = 140;
+            // 
+            // 打分
+            // 
+            this.打分.HeaderText = "score";
+            this.打分.Name = "打分";
+            this.打分.ReadOnly = true;
+            this.打分.Width = 140;
             // 
             // contacterGroupBox
             // 
-            this.contacterGroupBox.Controls.Add(this.readContacterButton);
             this.contacterGroupBox.Controls.Add(this.contacterDataGridView);
             this.contacterGroupBox.Location = new System.Drawing.Point(35, 31);
             this.contacterGroupBox.Name = "contacterGroupBox";
@@ -749,16 +878,6 @@
             this.contacterGroupBox.TabStop = false;
             this.contacterGroupBox.Text = "联系人信息";
             // 
-            // readContacterButton
-            // 
-            this.readContacterButton.Location = new System.Drawing.Point(81, 351);
-            this.readContacterButton.Name = "readContacterButton";
-            this.readContacterButton.Size = new System.Drawing.Size(123, 23);
-            this.readContacterButton.TabIndex = 1;
-            this.readContacterButton.Text = "读取联系方式excel";
-            this.readContacterButton.UseVisualStyleBackColor = true;
-            this.readContacterButton.Click += new System.EventHandler(this.readContacterButton_Click);
-            // 
             // contacterDataGridView
             // 
             this.contacterDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -766,35 +885,9 @@
             this.contacterDataGridView.Name = "contacterDataGridView";
             this.contacterDataGridView.ReadOnly = true;
             this.contacterDataGridView.RowTemplate.Height = 23;
-            this.contacterDataGridView.Size = new System.Drawing.Size(248, 325);
+            this.contacterDataGridView.Size = new System.Drawing.Size(248, 340);
             this.contacterDataGridView.TabIndex = 0;
             this.contacterDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.contacterDataGridView_CellClick);
-            // 
-            // clusterLocalNum
-            // 
-            this.clusterLocalNum.HeaderText = "本机号码";
-            this.clusterLocalNum.Name = "clusterLocalNum";
-            this.clusterLocalNum.Width = 80;
-            // 
-            // clusterContactNum
-            // 
-            this.clusterContactNum.HeaderText = "对方号码";
-            this.clusterContactNum.Name = "clusterContactNum";
-            this.clusterContactNum.Width = 80;
-            // 
-            // intiRes
-            // 
-            this.intiRes.HeaderText = "类别";
-            this.intiRes.Name = "intiRes";
-            this.intiRes.Width = 80;
-            // 
-            // intiResPictureBox
-            // 
-            this.intiResPictureBox.Location = new System.Drawing.Point(18, 20);
-            this.intiResPictureBox.Name = "intiResPictureBox";
-            this.intiResPictureBox.Size = new System.Drawing.Size(470, 340);
-            this.intiResPictureBox.TabIndex = 0;
-            this.intiResPictureBox.TabStop = false;
             // 
             // MainForm
             // 
@@ -836,9 +929,11 @@
             this.clusterCenterGroupBox.PerformLayout();
             this.resShowTabPage.ResumeLayout(false);
             this.resShowGroupBox.ResumeLayout(false);
+            this.resShowGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nIntiDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.intiDataGridView)).EndInit();
             this.contacterGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.contacterDataGridView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.intiResPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -910,13 +1005,22 @@
         private System.Windows.Forms.TabPage resShowTabPage;
         private System.Windows.Forms.GroupBox contacterGroupBox;
         private System.Windows.Forms.DataGridView contacterDataGridView;
-        private System.Windows.Forms.Button readContacterButton;
         private System.Windows.Forms.GroupBox resShowGroupBox;
         private System.Windows.Forms.ToolStripMenuItem 数据预处理文件操作ToolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn clusterLocalNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn clusterContactNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn intiRes;
-        private System.Windows.Forms.PictureBox intiResPictureBox;
+        private System.Windows.Forms.DataGridView intiDataGridView;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.DataGridView nIntiDataGridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn intiContactNum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn intiName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 打分;
+        private System.Windows.Forms.Button graphShowButton;
     }
 }
 

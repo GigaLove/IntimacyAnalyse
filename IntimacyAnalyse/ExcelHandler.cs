@@ -8,6 +8,9 @@ using System.Data.OleDb;
 
 namespace IntimacyAnalyse
 {
+    /// <summary>
+    /// Excel数据处理相关操作类
+    /// </summary>
     class ExcelHandler
     {
         private string connectStr;          //链接字符串
@@ -23,7 +26,8 @@ namespace IntimacyAnalyse
         public ExcelHandler(string path)
         {
             fullPath = path;
-            connectStr = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + fullPath + ";Extended Properties='Excel 8.0;HDR=Yes;IMEX=1'";
+            connectStr = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + fullPath + 
+                ";Extended Properties='Excel 8.0;HDR=Yes;IMEX=1'";
         }
 
         public void serFullPath(string fullPath)
@@ -45,6 +49,13 @@ namespace IntimacyAnalyse
             adapter.Fill(ds, "Sheet1");
             conn.Dispose();
             return ds;
+        }
+
+        public DataTable getTable()
+        {
+            string sqlStr = "select * from [" + getTableName() + "];";       //sql语句
+            System.Data.DataTable table = loadExcelData(sqlStr).Tables[0];
+            return table;
         }
 
         /// <summary>
@@ -88,11 +99,6 @@ namespace IntimacyAnalyse
             return dataList;
         }
 
-        public DataTable getTable()
-        {
-            string sqlStr = "select * from [" + getTableName() + "];";       //sql语句
-            System.Data.DataTable table = loadExcelData(sqlStr).Tables[0];
-            return table;
-        }
+        
     }
 }

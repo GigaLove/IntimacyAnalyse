@@ -6,9 +6,11 @@ using System.Collections;
 
 namespace IntimacyAnalyse
 {
+    /// <summary>
+    /// 数据特征提取相关函数
+    /// </summary>
     class FeatureExtract
     {
-
         /// <summary>
         /// 数据特征提取
         /// </summary>
@@ -41,6 +43,7 @@ namespace IntimacyAnalyse
                     continue;
                 }
 
+                // 如果hashtable中，不存在创建新的用户特征 UserFeature
                 if (!contactFeatureTable.Contains(localNumber))
                 {
                     uf = new UserFeature(localNumber);
@@ -73,6 +76,7 @@ namespace IntimacyAnalyse
                     cf.PhoneCountRate = (double)cf.PhoneCount / uf.TotalCount;
                     cf.PhoneDurationRate = (double)cf.PhoneDuration / uf.TotalDuration;
                     cf.computeFrequency();
+                    // double类型数据保留小数点后四位
                     cf.TimeSlotPhoneCount[0] = Convert.ToDouble(String.Format("{0:N4}", cf.TimeSlotPhoneCount[0] / cf.PhoneCount));
                     cf.TimeSlotPhoneCount[1] = Convert.ToDouble(String.Format("{0:N4}", cf.TimeSlotPhoneCount[1] / cf.PhoneCount));
                     cf.TimeSlotPhoneCount[2] = Convert.ToDouble(String.Format("{0:N4}", cf.TimeSlotPhoneCount[2] / cf.PhoneCount));

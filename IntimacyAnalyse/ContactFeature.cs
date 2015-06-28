@@ -6,19 +6,22 @@ using System.Globalization;
 
 namespace IntimacyAnalyse
 {
+    /// <summary>
+    /// 联系人特征数据结构
+    /// </summary>
     class ContactFeature
     {
         private const int TIME_RANGE = 150;
 
-        private string localNumber;
-        private string contactNumber;
-        private int phoneCount;
-        private int phoneDuration;
-        private double phoneCountRate;
-        private double phoneDurationRate;
-        private int contactFrequency;
-        private double[] timeSlotPhoneCount;
-        private int intimacy;
+        private string localNumber;             // 本机号码
+        private string contactNumber;           // 联系号码
+        private int phoneCount;                 // 通话次数
+        private int phoneDuration;              // 通话时长
+        private double phoneCountRate;          // 通话次数比
+        private double phoneDurationRate;       // 通话时长比
+        private int contactFrequency;           // 通话频率
+        private double[] timeSlotPhoneCount;    // 不同通话时间段的通话次数比，分为6：12点，12：18点，18：24点
+        private int intimacy;                   // 亲密度
         private DateTimeFormatInfo dtFormat;
 
         public ContactFeature()
@@ -89,7 +92,9 @@ namespace IntimacyAnalyse
             get { return intimacy; }
             set { intimacy = value; }
         }
-
+        /// <summary>
+        /// 增加phoneCount计数
+        /// </summary>
         public void countRise()
         {
             this.phoneCount++;

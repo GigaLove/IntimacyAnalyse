@@ -6,6 +6,9 @@ using System.IO;
 
 namespace IntimacyAnalyse
 {
+    /// <summary>
+    /// CSV相关处理类
+    /// </summary>
     class CsvHandler
     {
         public CsvHandler()

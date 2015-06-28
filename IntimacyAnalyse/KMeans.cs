@@ -21,27 +21,23 @@ namespace IntimacyAnalyse
             bool changed = true;
             bool success = true;
 
-            int[] clustering = InitClustering(data.Length, numClusters, 0); // semi-random initialization
-            double[][] means = Allocate(numClusters, data[0].Length); // small convenience
+            int[] clustering = InitClustering(data.Length, numClusters, 0); 
+            double[][] means = Allocate(numClusters, data[0].Length); 
 
-            int maxCount = data.Length * 10; // sanity check
+            int maxCount = data.Length * 10; 
             int ct = 0;
             while (changed == true && success == true && ct < maxCount)
             {
-                ++ct; // k-means typically converges very quickly
-                success = UpdateMeans(data, clustering, means); // compute new cluster means if possible. no effect if fail
-                changed = UpdateClustering(data, clustering, means); // (re)assign tuples to clusters. no effect if fail
+                ++ct; 
+                success = UpdateMeans(data, clustering, means);
+                changed = UpdateClustering(data, clustering, means);
             }
             return clustering;
         }
 
         public static double[][] Normalized(double[][] rawData)
         {
-            // normalize raw data by computing (x - mean) / stddev
-            // primary alternative is min-max:
-            // v' = (v - min) / (max - min)
-
-            // make a copy of input data
+         
             double[][] result = new double[rawData.Length][];
             for (int i = 0; i < rawData.Length; ++i)
             {
@@ -65,39 +61,43 @@ namespace IntimacyAnalyse
             return result;
         }
 
+        /// <summary>
+        /// 初始化聚类中心
+        /// </summary>
         private static int[] InitClustering(int numTuples, int numClusters, int randomSeed)
         {
-            // init clustering semi-randomly (at least one tuple in each cluster)
-            // consider alternatives, especially k-means++ initialization,
-            // or instead of randomly assigning each tuple to a cluster, pick
-            // numClusters of the tuples as initial centroids/means then use
-            // those means to assign each tuple to an initial cluster.
             Random random = new Random(randomSeed);
             int[] clustering = new int[numTuples];
-            for (int i = 0; i < numClusters; ++i) // make sure each cluster has at least one tuple
+            for (int i = 0; i < numClusters; ++i) 
                 clustering[i] = i;
             for (int i = numClusters; i < clustering.Length; ++i)
-                clustering[i] = random.Next(0, numClusters); // other assignments random
+                clustering[i] = random.Next(0, numClusters); 
             return clustering;
         }
 
+        /// <summary>
+        /// 分配新的聚类中心
+        /// </summary>
+        /// <param name="numClusters">聚类数</param>
+        /// <param name="numColumns">数据属性列</param>
+        /// <returns>初始化的新聚类中心</returns>
         private static double[][] Allocate(int numClusters, int numColumns)
         {
-            // convenience matrix allocator for Cluster()
             double[][] result = new double[numClusters][];
             for (int k = 0; k < numClusters; ++k)
                 result[k] = new double[numColumns];
             return result;
         }
 
+        /// <summary>
+        /// 更新聚类中心
+        /// </summary>
+        /// <param name="data">待处理数据</param>
+        /// <param name="clustering">聚类标签</param>
+        /// <param name="means">原聚类中心</param>
+        /// <returns>更新后的聚类中心</returns>
         private static bool UpdateMeans(double[][] data, int[] clustering, double[][] means)
         {
-            // returns false if there is a cluster that has no tuples assigned to it
-            // parameter means[][] is really a ref parameter
-
-            // check existing cluster counts
-            // can omit this check if InitClustering and UpdateClustering
-            // both guarantee at least one tuple in each cluster (usually true)
             int numClusters = means.Length;
             int[] clusterCounts = new int[numClusters];
             for (int i = 0; i < data.Length; ++i)
@@ -108,9 +108,8 @@ namespace IntimacyAnalyse
 
             for (int k = 0; k < numClusters; ++k)
                 if (clusterCounts[k] == 0)
-                    return false; // bad clustering. no change to means[][]
+                    return false; 
 
-            // update, zero-out means so it can be used as scratch matrix 
             for (int k = 0; k < means.Length; ++k)
                 for (int j = 0; j < means[k].Length; ++j)
                     means[k][j] = 0.0;
@@ -119,36 +118,34 @@ namespace IntimacyAnalyse
             {
                 int cluster = clustering[i];
                 for (int j = 0; j < data[i].Length; ++j)
-                    means[cluster][j] += data[i][j]; // accumulate sum
+                    means[cluster][j] += data[i][j];
             }
 
             for (int k = 0; k < means.Length; ++k)
                 for (int j = 0; j < means[k].Length; ++j)
-                    means[k][j] /= clusterCounts[k]; // danger of div by 0
+                    means[k][j] /= clusterCounts[k];
             return true;
         }
 
+        /// <summary>
+        /// 更新数据分类标签
+        /// </summary>
         private static bool UpdateClustering(double[][] data, int[] clustering, double[][] means)
         {
-            // (re)assign each tuple to a cluster (closest mean)
-            // returns false if no tuple assignments change OR
-            // if the reassignment would result in a clustering where
-            // one or more clusters have no tuples.
-
             int numClusters = means.Length;
             bool changed = false;
 
-            int[] newClustering = new int[clustering.Length]; // proposed result
+            int[] newClustering = new int[clustering.Length]; 
             Array.Copy(clustering, newClustering, clustering.Length);
 
-            double[] distances = new double[numClusters]; // distances from curr tuple to each mean
+            double[] distances = new double[numClusters]; 
 
-            for (int i = 0; i < data.Length; ++i) // walk thru each tuple
+            for (int i = 0; i < data.Length; ++i) 
             {
                 for (int k = 0; k < numClusters; ++k)
-                    distances[k] = Distance(data[i], means[k]); // compute distances from curr tuple to all k means
+                    distances[k] = Distance(data[i], means[k]); 
 
-                int newClusterID = MinIndex(distances); // find closest mean ID
+                int newClusterID = MinIndex(distances); 
                 if (newClusterID != newClustering[i])
                 {
                     changed = true;
@@ -157,9 +154,8 @@ namespace IntimacyAnalyse
             }
 
             if (changed == false)
-                return false; // no change so bail and don't update clustering[][]
+                return false; 
 
-            // check proposed clustering[] cluster counts
             int[] clusterCounts = new int[numClusters];
             for (int i = 0; i < data.Length; ++i)
             {
@@ -169,16 +165,17 @@ namespace IntimacyAnalyse
 
             for (int k = 0; k < numClusters; ++k)
                 if (clusterCounts[k] == 0)
-                    return false; // bad clustering. no change to clustering[][]
+                    return false; 
 
-            Array.Copy(newClustering, clustering, newClustering.Length); // update
-            return true; // good clustering and at least one change
+            Array.Copy(newClustering, clustering, newClustering.Length); // 更新
+            return true; 
         }
 
+        /// <summary>
+        /// 计算元组与质心的欧几里得距离
+        /// </summary>
         private static double Distance(double[] tuple, double[] mean)
         {
-            // Euclidean distance between two vectors for UpdateClustering()
-            // consider alternatives such as Manhattan distance
             double sumSquaredDiffs = 0.0;
             for (int j = 0; j < tuple.Length; ++j)
                 sumSquaredDiffs += Math.Pow((tuple[j] - mean[j]), 2);
@@ -187,8 +184,6 @@ namespace IntimacyAnalyse
 
         private static int MinIndex(double[] distances)
         {
-            // index of smallest value in array
-            // helper for UpdateClustering()
             int indexOfMin = 0;
             double smallDist = distances[0];
             for (int k = 0; k < distances.Length; ++k)
@@ -201,11 +196,10 @@ namespace IntimacyAnalyse
             }
             return indexOfMin;
         }
-
-        // ============================================================================
-
-        // misc display helpers for demo
-
+        
+        /// <summary>
+        /// 聚类结果展示
+        /// </summary>
         static void ShowData(double[][] data, int decimals, bool indices, bool newLine)
         {
             for (int i = 0; i < data.Length; ++i)

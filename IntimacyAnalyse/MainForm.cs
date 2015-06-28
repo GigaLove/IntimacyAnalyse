@@ -10,25 +10,28 @@ using System.Collections;
 
 namespace IntimacyAnalyse
 {
+    /// <summary>
+    /// 系统主界面
+    /// </summary>
     public partial class MainForm : Form
     {
-        private const int CLUSTER_COUNT = 2;
+        private const int CLUSTER_COUNT = 2;        // 数据聚类数
 
-        private ExcelHandler excelHandler;
+        private ExcelHandler excelHandler;          // Excel帮助类
         private DataTable excelTable;
         private string fileName = "";
-        private List<string[]> dataList;
-        private List<string[]> csvList;
-        private List<string[]> selectedFeatureList;
-        private List<string[]> clusterFeatureList;
-        private List<string[]> markedDataList;
+        private List<string[]> dataList;            // 源数据列表
+        private List<string[]> csvList;             // csv数据列表
+        private List<string[]> selectedFeatureList; // 选中特征列表
+        private List<string[]> clusterFeatureList;  // 聚类数据特征列表
+        private List<string[]> markedDataList;      // 标记数据特征列表
         private Boolean isFormated = false;
         private OpenFileDialog openFileDialog;
-        private double[][] means;
-        private double[] intiMeans;
-        private double[] nIntiMeans;
-        private Hashtable contactPerson;
-        private Hashtable intiResTable;
+        private double[][] means;                   // 聚类中心
+        private double[] intiMeans;                 // 亲密度类聚类中心
+        private double[] nIntiMeans;                // 分亲密类聚类中心
+        private Hashtable contactPerson;            // 联系人hashtable
+        private Hashtable intiResTable;             // 亲密度结果hashtable
         private int intiClass;
         private Point[] points = { new Point(215, 31), new Point(270,38), new Point(318,60), new Point(360,95), new Point(390,138), 
             new Point(403,186), new Point(404,240), new Point(390,290), new Point(363,335), new Point(323, 371), 
@@ -42,11 +45,25 @@ namespace IntimacyAnalyse
             openFileDialog = new OpenFileDialog();
         }
 
+        /// <summary>
+        /// MainForm load事件处理函数
+        /// </summary>
         private void MainForm_Load(object sender, EventArgs e)
         {
             for (int i = 0; i < featureCheckedListBox.Items.Count; i++)
             {
                 featureCheckedListBox.SetItemChecked(i, true);
+            }
+
+            // 基于同学电话excel填充联系人Hashtable
+            excelHandler = new ExcelHandler("同学电话号码列表.xls");
+            excelTable = excelHandler.getTable();
+            contacterDataGridView.DataSource = excelTable;
+
+            contactPerson = new Hashtable();
+            foreach (DataRow row in excelTable.Rows)
+            {
+                contactPerson.Add(row["手机号"].ToString(), row["姓名"].ToString());
             }
         }
 
@@ -72,35 +89,34 @@ namespace IntimacyAnalyse
             //featureData = FeatureExtract.featureStr2Double("feature.csv");
             //int[] clustering = KMeans.Cluster(featureData, 2);
             //double[][] means = KMeans.getMeans(featureData, clustering, 2);
-
         }
 
         private void readExcelMenuItem_Click(object sender, EventArgs e)
         {
-            readExcelData(originDataGridView);
+            readExcelData(originDataGridView, 128);
         }
 
         /// <summary>
         /// 基于width调整数据表格宽度
         /// </summary>
         /// <param name="width"></param>
-        private void adapteDataGridViewWidth(int width)
+        private void adapteDataGridViewWidth(DataGridView dgv, int width)
         {
-            for (int i = 0; i < originDataGridView.Columns.Count; i++)
+            for (int i = 0; i < dgv.Columns.Count; i++)
             {
-                originDataGridView.Columns[i].Width = width;
+                dgv.Columns[i].Width = width;
             }
         }
 
         private void readExcelButton_Click(object sender, EventArgs e)
         {
-            readExcelData(originDataGridView);
+            readExcelData(originDataGridView, 128);
         }
 
         /// <summary>
         /// 读取excel数据，显示到datagridview中
         /// </summary>
-        private void readExcelData(DataGridView dgv)
+        private void readExcelData(DataGridView dgv, int width)
         {
             // 设置filedialog相关属性
             openFileDialog.InitialDirectory = "//";
@@ -114,7 +130,7 @@ namespace IntimacyAnalyse
                 excelHandler = new ExcelHandler(fileName);
                 excelTable = excelHandler.getTable();
                 dgv.DataSource = excelTable;
-                adapteDataGridViewWidth(128);
+                adapteDataGridViewWidth(dgv, width);
             }
         }
 
@@ -221,6 +237,7 @@ namespace IntimacyAnalyse
             for (int i = 0; i < selectedCount + 2; i++)
                 featureDataGridView.Columns.Add(new DataGridViewTextBoxColumn());
 
+            // 将数据写入对应的datagridview
             foreach (string[] featureArray in featureList)
             {
                 DataGridViewRow dr = new DataGridViewRow();
@@ -314,6 +331,7 @@ namespace IntimacyAnalyse
 
             for (int i = 0; i < clusterFeatureList.Count; i++)
             {
+                // 判断聚类标号
                 int inti = clustering[i];
                 if (inti == intiClass)
                     inti = 1;
@@ -325,6 +343,7 @@ namespace IntimacyAnalyse
                 clusterResDataGridView.Rows.Add(dr);
             }
 
+            // 连接聚类中心点
             intiRichTextBox.Text = String.Join("\n", means[intiClass]);
             nIntiRichTextBox.Text = String.Join("\n", means[1 - intiClass]);
             iRichTextBox.Text = String.Join("\n", means[intiClass]);
@@ -335,9 +354,14 @@ namespace IntimacyAnalyse
             intiResTable = new Hashtable();
             IntiRes intiRes = null;
 
+            // 聚类分析的结果加上聚类标号添加到对应的datagridview中
             for (int i = 0; i < clusterFeatureList.Count; i++)
             {
                 string localNum = clusterFeatureList[i][0];
+                double score = Convert.ToDouble(clusterFeatureList[i][2]) * 5 + Convert.ToDouble(clusterFeatureList[i][3]) * 5;
+                score = Convert.ToDouble(String.Format("{0:N2}", score));
+                IntiScore intiScore = new IntiScore(clusterFeatureList[i][1], score);
+
                 if (!intiResTable.Contains(localNum))
                 {
                     intiRes = new IntiRes(localNum);
@@ -351,16 +375,18 @@ namespace IntimacyAnalyse
 
                 if (clustering[i] == intiClass)
                 {
-                    intiRes.IntiList.Add(clusterFeatureList[i][1]);
+                    intiRes.IntiList.Add(intiScore);
                 }
                 else
                 {
-                    intiRes.NIntiList.Add(clusterFeatureList[i][1]);
+                    intiRes.NIntiList.Add(intiScore);
                 }
             }
-            MessageBox.Show("xx");
         }
 
+        /// <summary>
+        /// 基于分类标号数组，判断亲密的类所属类别
+        /// </summary>
         private int judgeIntiClass(int[] clustering)
         {
             int count = 0;
@@ -396,6 +422,11 @@ namespace IntimacyAnalyse
             {
                 MessageBox.Show("请先训练样本集");
                 mainTabControl.SelectedTab = clusterTabPage;
+                return;
+            }
+            if (markedDataList == null)
+            {
+                MessageBox.Show("请先选择测试标号样本");
                 return;
             }
 
@@ -472,36 +503,83 @@ namespace IntimacyAnalyse
         /// </summary>
         private void readContacterButton_Click(object sender, EventArgs e)
         {
-            readExcelData(contacterDataGridView);
-            contactPerson = new Hashtable();
-            foreach (DataRow row in excelTable.Rows)
-            {
-                contactPerson.Add(row["姓名"], row["手机号"]);
-            }
-            MessageBox.Show("联系方式读取成功，共计" + contactPerson.Count + "个联系人信息");
 
-            drawIntiNet();            
+            //drawIntiNet();            
         }
 
-        private void drawIntiNet()
-        {
-            Graphics g = intiResPictureBox.CreateGraphics();
+        //private void drawIntiNet()
+        //{
+        //    Graphics g = intiResPictureBox.CreateGraphics();
 
-            Pen bluePen = new Pen(Color.DarkGray, 0.01f);
+        //    Pen bluePen = new Pen(Color.DarkGray, 0.01f);
 
-            Font myFont = new Font("Itatic", 10, FontStyle.Bold);
-            Point centerPoint = new Point(intiResPictureBox.Width / 2, intiResPictureBox.Height / 2);
+        //    Font myFont = new Font("Itatic", 10, FontStyle.Bold);
+        //    Point centerPoint = new Point(intiResPictureBox.Width / 2, intiResPictureBox.Height / 2);
 
-            Brush bush = new SolidBrush(Color.Red);//填充的颜色
-           
-        }
+        //    Brush bush = new SolidBrush(Color.Red);//填充的颜色
+        //    foreach (Point point in points)
+        //    {
+        //        g.DrawEllipse(bluePen, point.X - 2f, point.Y - 2f, 4f, 4f);//给每个本班人点画圈
+        //    }
+        //}
 
+        /// <summary>
+        /// 联系人DataGridView点击事件处理函数，实现当点击的时候，
+        /// 显示对应的亲密度和非亲密度列表
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void contacterDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (intiResTable == null)
+            {
+                MessageBox.Show("请先进行聚类分析");
+                return;
+            }
+
+            intiDataGridView.Rows.Clear();
+            nIntiDataGridView.Rows.Clear();
             int rowindex = e.RowIndex;
             string localNum = contacterDataGridView.Rows[rowindex].Cells[1].Value.ToString();
 
-            
+            if (intiResTable.Contains(localNum))
+            {
+                IntiRes iRes = intiResTable[localNum] as IntiRes;
+                foreach (IntiScore intiScore in iRes.IntiList)
+                {
+                    DataGridViewRow dr = new DataGridViewRow();
+                    string name = "";
+
+                    if (contactPerson.Contains(intiScore.Number))
+                    {
+                        name = contactPerson[intiScore.Number] as string;
+                    }
+
+                    string[] temp = { intiScore.Number, name, intiScore.Score.ToString() };
+                    dr.CreateCells(intiDataGridView, temp);
+                    intiDataGridView.Rows.Add(dr);
+                }
+
+                foreach (IntiScore intiScore in iRes.NIntiList)
+                {
+                    DataGridViewRow dr = new DataGridViewRow();
+                    string name = "";
+
+                    if (contactPerson.Contains(intiScore.Number))
+                    {
+                        name = contactPerson[intiScore.Number] as string;
+                    }
+                    string[] temp = { intiScore.Number, name, intiScore.Score.ToString() };
+                    dr.CreateCells(nIntiDataGridView, temp);
+                    nIntiDataGridView.Rows.Add(dr);
+                }
+            }
+        }
+
+        private void graphShowButton_Click(object sender, EventArgs e)
+        {
+            GraphShowForm showForm = new GraphShowForm(intiResTable);
+            showForm.Show();
         }
     }
 }
