@@ -26,6 +26,12 @@ namespace IntimacyAnalyse
             connectStr = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + fullPath + ";Extended Properties='Excel 8.0;HDR=Yes;IMEX=1'";
         }
 
+        public void serFullPath(string fullPath)
+        {
+            this.fullPath = fullPath;
+            connectStr = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + fullPath + ";Extended Properties='Excel 8.0;HDR=Yes;IMEX=1'";
+        }
+
         /// <summary>
         /// 方法说明：加载excel中的数据
         /// </summary>
@@ -82,33 +88,11 @@ namespace IntimacyAnalyse
             return dataList;
         }
 
-        ///// <summary>
-        ///// 方法说明：对getTableName、LoadExcelData方法进行封装，直接获取list
-        ///// </summary>
-        ///// <returns>封装数据的list</returns>
-        //public List<List<string>> getList()
-        //{
-        //    List<List<string>> dataList = new List<List<string>>();
-        //    string sqlStr = "select * from [" + getTableName() + "];";       //sql语句
-        //    System.Data.DataTable table = loadExcelData(sqlStr).Tables[0];
-        //    dataList = convert2List(table);
-        //    return dataList;
-        //}
-
         public DataTable getTable()
         {
             string sqlStr = "select * from [" + getTableName() + "];";       //sql语句
             System.Data.DataTable table = loadExcelData(sqlStr).Tables[0];
             return table;
-        }
-
-        public void updateDataSource(DataTable table)
-        {
-            conn.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + fullPath +
-                    ";Extended Properties='Excel 8.0;HDR=Yes;IMEX=1'";
-            conn.Open();
-            adapter.Update(table);
-            conn.Close();
         }
     }
 }

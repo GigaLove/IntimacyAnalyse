@@ -11,6 +11,8 @@ namespace IntimacyAnalyse
     /// </summary>
     class UserFeature
     {
+
+
         private string localNumber;
         private int totalCount;     // 通话总次数
         private int totalDuration;      // 通话总时长

@@ -16,6 +16,11 @@ namespace IntimacyAnalyse
         {
             int sec = 0;
 
+            if (!time.Contains("分") && !time.Contains("秒"))
+            {
+                return Convert.ToInt32(time);
+            }
+
             if (time != null && time.Length > 1)
             {
                 time = time.Substring(0, time.Length - 1);

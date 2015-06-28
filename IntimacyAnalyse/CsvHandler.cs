@@ -26,6 +26,7 @@ namespace IntimacyAnalyse
         public static void WriteCSV(string filePathName, bool append, List<String[]> ls)
         {
             StreamWriter fileWriter = new StreamWriter(filePathName, append, Encoding.Default);
+           
             foreach (String[] strArr in ls)
             {
                 fileWriter.WriteLine(String.Join(",", strArr));
@@ -42,7 +43,7 @@ namespace IntimacyAnalyse
         public static List<String[]> ReadCSV(string filePathName)
         {
             List<String[]> ls = new List<String[]>();
-            StreamReader fileReader = new StreamReader(filePathName);
+            StreamReader fileReader = new StreamReader(filePathName, Encoding.Default);
             string strLine = "";
             while (strLine != null)
             {

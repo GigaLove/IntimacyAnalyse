@@ -8,6 +8,8 @@ namespace IntimacyAnalyse
 {
     class ContactFeature
     {
+        private const int TIME_RANGE = 150;
+
         private string localNumber;
         private string contactNumber;
         private int phoneCount;
@@ -100,9 +102,13 @@ namespace IntimacyAnalyse
 
         public void computeFrequency()
         {
-            contactFrequency = (int)Math.Ceiling((double)150 / phoneCount);
+            contactFrequency = (int)Math.Ceiling((double)TIME_RANGE / phoneCount);
         }
 
+        /// <summary>
+        /// 通话时间段统计
+        /// </summary>
+        /// <param name="time"></param>
         public void timeSlotStat(String time)
         {
             DateTime dateTime = Convert.ToDateTime(time, dtFormat);
@@ -124,6 +130,10 @@ namespace IntimacyAnalyse
             }
         }
 
+        /// <summary>
+        /// 将通话特征转换成string数组返回
+        /// </summary>
+        /// <returns>特征向量数组</returns>
         public string[] convert2StrArray()
         {
             string[] featureArray = {localNumber, contactNumber, phoneCount.ToString(), String.Format("{0:N4}", phoneCountRate), 
