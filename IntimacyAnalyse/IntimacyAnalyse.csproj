@@ -70,16 +70,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConnectPerson.cs" />
     <Compile Include="CsvHandler.cs" />
     <Compile Include="ContactFeature.cs" />
     <Compile Include="ExcelHandler.cs" />
     <Compile Include="FeatureExtract.cs" />
-    <Compile Include="GraphShowForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GraphShowForm.Designer.cs">
-      <DependentUpon>GraphShowForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="IntiRes.cs" />
     <Compile Include="IntiScore.cs" />
     <Compile Include="MainForm.cs">
@@ -93,10 +88,13 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="KMeans.cs" />
+    <Compile Include="ShowForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShowForm.Designer.cs">
+      <DependentUpon>ShowForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserFeature.cs" />
-    <EmbeddedResource Include="GraphShowForm.resx">
-      <DependentUpon>GraphShowForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -110,6 +108,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="ShowForm.resx">
+      <DependentUpon>ShowForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

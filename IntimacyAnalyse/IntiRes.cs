@@ -8,7 +8,7 @@ namespace IntimacyAnalyse
     /// <summary>
     /// 亲密度分析结果
     /// </summary>
-    class IntiRes
+    public class IntiRes
     {
         private string localNum;    // 本机号码
         private string name;    // 用户姓名

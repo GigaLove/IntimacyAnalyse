@@ -215,6 +215,9 @@ namespace IntimacyAnalyse
                 return;
             }
 
+            featureDataGridView.Rows.Clear();
+            featureDataGridView.Columns.Clear();
+
             // 获取选定数据特征
             int[] selectedFeature = new int[8];
             int selectedCount = 0;
@@ -540,7 +543,7 @@ namespace IntimacyAnalyse
             intiDataGridView.Rows.Clear();
             nIntiDataGridView.Rows.Clear();
             int rowindex = e.RowIndex;
-            string localNum = contacterDataGridView.Rows[rowindex].Cells[1].Value.ToString();
+            string localNum = contacterDataGridView.Rows[rowindex].Cells[2].Value.ToString();
 
             if (intiResTable.Contains(localNum))
             {
@@ -578,7 +581,7 @@ namespace IntimacyAnalyse
 
         private void graphShowButton_Click(object sender, EventArgs e)
         {
-            GraphShowForm showForm = new GraphShowForm(intiResTable);
+            ShowForm showForm = new ShowForm(intiResTable);
             showForm.Show();
         }
     }

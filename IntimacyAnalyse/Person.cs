@@ -8,35 +8,51 @@ namespace IntimacyAnalyse
 {
     class Person
     {
+        int no;//人员标号
+        string tel;//电话
+        string name;//姓名
+        List<ConnectPerson> classmate;
+        List<ConnectPerson> otherPerson;
 
-        int no;     //人员标号
-        Hashtable connectPerson;    //用于存储关联的同学
-        Hashtable otherPerson;  //用于存储非本班同学
-
-        public Person(int number)
+        public Person()
         {
-            this.no = number;
-            connectPerson = new Hashtable();
-            otherPerson = new Hashtable();
         }
 
+        public Person(int no,string name, string tel)
+        {
+            this.no = no;
+            this.name = name;
+            this.tel = tel;
+            classmate = new List<ConnectPerson>();
+            otherPerson = new List<ConnectPerson>();
+        }
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+        public string Tel
+        {
+            get { return tel; }
+            set { tel = value; }
+        }
         public int No
         {
             get { return no; }
             set { no = value; }
         }
 
-        public Hashtable ConnectPerson
+        public List<ConnectPerson> Classmate
         {
-            get { return connectPerson; }
-            set { connectPerson = value; }
+            get { return classmate; }
+            set { classmate = value; }
         }
 
-        public Hashtable OtherPerson
+        public List<ConnectPerson> OtherPerson
         {
             get { return otherPerson; }
             set { otherPerson = value; }
         }
-        
     }
 }
